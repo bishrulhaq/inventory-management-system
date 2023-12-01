@@ -70,7 +70,6 @@ Route::get('/new-order', [OrderController::class,'newformData'])->middleware(['a
 
 Route::post('/insert-new-order',[OrderController::class,'newStore'])->middleware(['auth']);
 
-
 //customer
 Route::get('/add-customer', function () {
     return view('Admin.add_customer');

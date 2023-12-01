@@ -75,22 +75,22 @@
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="{{ route('new.order')}}">New Order</a>
                             <a class="nav-link" href="{{ route('all.orders')}}">Orders List</a>
-                            <a class="nav-link" href="{{ route('pending.orders')}}">Pending Orders</a>
-                            <a class="nav-link" href="{{ route('delivered.orders')}}">Delivered Orders</a>
+{{--                            <a class="nav-link" href="{{ route('pending.orders')}}">Pending Orders</a>--}}
+{{--                            <a class="nav-link" href="{{ route('delivered.orders')}}">Delivered Orders</a>--}}
                         </nav>
                     </div>
 
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInvoice" aria-expanded="false" aria-controls="collapseInvoice">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                        Sales
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseInvoice" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="{{ route('new.invoice') }}">New Invoice</a>
-                            <a class="nav-link" href="{{ route('all.invoices') }}">Invoices List</a>
-                        </nav>
-                    </div>
+{{--                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInvoice" aria-expanded="false" aria-controls="collapseInvoice">--}}
+{{--                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>--}}
+{{--                        Sales--}}
+{{--                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>--}}
+{{--                    </a>--}}
+{{--                    <div class="collapse" id="collapseInvoice" aria-labelledby="headingOne" data-parent="#sidenavAccordion">--}}
+{{--                        <nav class="sb-sidenav-menu-nested nav">--}}
+{{--                            <a class="nav-link" href="{{ route('new.invoice') }}">New Invoice</a>--}}
+{{--                            <a class="nav-link" href="{{ route('all.invoices') }}">Invoices List</a>--}}
+{{--                        </nav>--}}
+{{--                    </div>--}}
 
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAuthentication" aria-expanded="false" aria-controls="collapseAuthentication">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -114,7 +114,7 @@
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid">
                 <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Open Source</div>
+                    <div class="text-muted">Blue Bird</div>
                     <div>
                         <a href="#">Privacy Policy</a>
                         &middot;
@@ -130,6 +130,8 @@
 <script src="{{ asset('js/dashboard-scripts.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
+<script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
+<script src="{{ asset('assets/demo/chart-pie-demo.js') }}"></script>
 <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>

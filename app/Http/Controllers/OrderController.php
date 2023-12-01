@@ -10,7 +10,7 @@ use App\Models\Customer;
 class OrderController extends Controller
 {
     public function store(Request $request){
-    	
+
     	$data=new Order;
     	$data->email= $request->email;
         $data->product_code = $request->code;
@@ -19,19 +19,28 @@ class OrderController extends Controller
     	$data->order_status = 0;
         $data->save();
         return Redirect()->route('all.orders');
-    	
+
     }
-     public function newStore(Request $request){
-        
-        $data=new Order;
-        $data->email= $request->email;
-        $data->product_code = $request->code;
-        $data->product_name = $request->name;
-        $data->quantity = $request->quantity;
+    public function newStore(Request $request){
+
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+            'code' => 'required',
+            'name' => 'required',
+            'quantity' => 'required|numeric',
+            'company' => 'nullable',
+            'address' => 'nullable',
+            'phone' => 'nullable'
+        ]);
+
+        $data = new Order;
+        $data->email = $validatedData['email'];
+        $data->product_code = $validatedData['code'];
+        $data->product_name = $validatedData['name'];
+        $data->quantity = $validatedData['quantity'];
         $data->order_status = 0;
         $data->save();
-        
-        //customer_track
+
         $customer = Customer::where('email', '=', $request->email)->first();
         if($customer === null){
             $data3=new Customer;
@@ -42,9 +51,10 @@ class OrderController extends Controller
             $data3->phone = $request->phone;
             $data3->save();
         }
-        return Redirect()->route('all.orders');
-        
+
+        return redirect()->route('all.orders');
     }
+
 
     public function newformData(){
         $products = Product::all();
