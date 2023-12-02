@@ -39,7 +39,7 @@
                         <td>{{ $row->created_at }}</td>
                     </tr>
                     @endforeach
-                    
+
                 </tbody>
             </table>
         </div>
@@ -47,48 +47,54 @@
 </div>
 @endsection
 @section('script')
-<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
-        
-<script>
-   
-
-
-   $('#dataTable').DataTable({
-    columnDefs: [
-    {bSortable: false, targets: [6]} 
-  ],
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                columnDefs: [
+                    {bSortable: false, targets: [10]}
+                ],
                 dom: 'lBfrtip',
-           buttons: [
-               {
-                   extend: 'copyHtml5',
-                   exportOptions: {
-                    modifier: {
-                        page: 'current'
+                buttons: [
+                    {
+                        extend: 'copyHtml5',
+                        exportOptions: {
+                            modifier: {
+                                page: 'current'
+                            },
+                            columns: [0, ':visible']
+                        }
                     },
-                       columns: [ 0, ':visible' ]
-                       
-                   }
-               },
-               {
-                   extend: 'excelHtml5',
-                   exportOptions: {
-                    modifier: {
-                        page: 'current'
+                    {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            modifier: {
+                                page: 'current'
+                            },
+                            columns: [0, ':visible']
+                        }
                     },
-                    columns: [ 0, ':visible' ]
-                   }
-               },
-               {
-                   extend: 'pdfHtml5',
-                   exportOptions: {
-                    modifier: {
-                        page: 'current'
+                    {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            modifier: {
+                                page: 'current'
+                            },
+                            columns: [0, 1, 2, 5]
+                        }
                     },
-                       columns: [ 0, 1, 2, 5 ]
-                   }
-               },
-               'colvis'
-           ]
-           });
-       </script>
+                    {
+                        extend: 'csvHtml5',
+                        exportOptions: {
+                            modifier: {
+                                page: 'current'
+                            },
+                            columns: [0, 1, 2, 3, 4, 5,6,7,8,9]
+                        }
+                    },
+                    'print',
+                    'colvis'
+                ]
+            });
+        });
+    </script>
 @endsection

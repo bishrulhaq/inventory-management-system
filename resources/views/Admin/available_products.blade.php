@@ -1,14 +1,14 @@
 @extends('layouts.admin_master')
 @section('content')
-<div class="card mb-4">
-    <div class="card-header">
-        <i class="fas fa-table mr-1"></i>
-        Available Products
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table mr-1"></i>
+            Available Products
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
                     <tr>
                         <th>Code</th>
                         <th>Name</th>
@@ -18,32 +18,84 @@
                         <th>Sales Unit Price</th>
                         <th>Action</th>
                     </tr>
-                </thead>
-                
-                <tbody>
-                	@foreach($products as $row)
-                    <tr>
-                        <td>{{ $row->product_code }}</td>
-                        <td>{{ $row->name }}</td>
-                        <td>{{ $row->category }}</td>
-                        
-                        @if($row->stock > '0')
-                            <td>{{ $row->stock }}</td>
-                        @else
-                            <td>Not Available</td>
-                        @endif
+                    </thead>
 
-                        <td>{{ $row->unit_price }}</td>
-                        <td>{{ $row->sales_unit_price }}</td>
-                        <td>
-                        	<a href="{{ 'add-order/'.$row->id }}" class="btn btn-sm btn-info">Order</a>
-                        </td>
-                    </tr>
+                    <tbody>
+                    @foreach($products as $row)
+                        <tr>
+                            <td>{{ $row->product_code }}</td>
+                            <td>{{ $row->name }}</td>
+                            <td>{{ $row->category }}</td>
+
+                            @if($row->stock > '0')
+                                <td>{{ $row->stock }}</td>
+                            @else
+                                <td>Not Available</td>
+                            @endif
+
+                            <td>{{ $row->unit_price }}</td>
+                            <td>{{ $row->sales_unit_price }}</td>
+                            <td>
+                                <a href="{{ 'add-order/'.$row->id }}" class="btn btn-sm btn-info">Order</a>
+                            </td>
+                        </tr>
                     @endforeach
-                    
-                </tbody>
-            </table>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                columnDefs: [
+                    {bSortable: false, targets: [6]}
+                ],
+                dom: 'lBfrtip',
+                buttons: [
+                    {
+                        extend: 'copyHtml5',
+                        exportOptions: {
+                            modifier: {
+                                page: 'current'
+                            },
+                            columns: [0, ':visible']
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            modifier: {
+                                page: 'current'
+                            },
+                            columns: [0, ':visible']
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            modifier: {
+                                page: 'current'
+                            },
+                            columns: [0, 1, 2, 5]
+                        }
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        exportOptions: {
+                            modifier: {
+                                page: 'current'
+                            },
+                            columns: [0, 1, 2, 3, 4, 5]
+                        }
+                    },
+                    'print',
+                    'colvis'
+                ]
+            });
+        });
+    </script>
 @endsection

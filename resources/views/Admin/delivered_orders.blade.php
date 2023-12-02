@@ -19,7 +19,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                     @foreach($orders as $row)
                     <tr>
                         <td>{{ $row->id }}</td>
@@ -36,14 +36,63 @@
                         </td>
                     </tr>
                     @endforeach
-                    
+
                 </tbody>
-                
+
             </table>
         </div>
     </div>
 </div>
-
-
-
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                columnDefs: [
+                    {bSortable: false, targets: [6]}
+                ],
+                dom: 'lBfrtip',
+                buttons: [
+                    {
+                        extend: 'copyHtml5',
+                        exportOptions: {
+                            modifier: {
+                                page: 'current'
+                            },
+                            columns: [0, ':visible']
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            modifier: {
+                                page: 'current'
+                            },
+                            columns: [0, ':visible']
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            modifier: {
+                                page: 'current'
+                            },
+                            columns: [0, 1, 2, 5]
+                        }
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        exportOptions: {
+                            modifier: {
+                                page: 'current'
+                            },
+                            columns: [0, 1, 2, 3, 4, 5]
+                        }
+                    },
+                    'print',
+                    'colvis'
+                ]
+            });
+        });
+    </script>
 @endsection

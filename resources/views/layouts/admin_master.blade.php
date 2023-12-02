@@ -75,22 +75,22 @@
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="{{ route('new.order')}}">New Order</a>
                             <a class="nav-link" href="{{ route('all.orders')}}">Orders List</a>
-{{--                            <a class="nav-link" href="{{ route('pending.orders')}}">Pending Orders</a>--}}
-{{--                            <a class="nav-link" href="{{ route('delivered.orders')}}">Delivered Orders</a>--}}
+                            <a class="nav-link" href="{{ route('pending.orders')}}">Pending Orders</a>
+                            <a class="nav-link" href="{{ route('delivered.orders')}}">Delivered Orders</a>
                         </nav>
                     </div>
 
-{{--                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInvoice" aria-expanded="false" aria-controls="collapseInvoice">--}}
-{{--                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>--}}
-{{--                        Sales--}}
-{{--                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>--}}
-{{--                    </a>--}}
-{{--                    <div class="collapse" id="collapseInvoice" aria-labelledby="headingOne" data-parent="#sidenavAccordion">--}}
-{{--                        <nav class="sb-sidenav-menu-nested nav">--}}
-{{--                            <a class="nav-link" href="{{ route('new.invoice') }}">New Invoice</a>--}}
-{{--                            <a class="nav-link" href="{{ route('all.invoices') }}">Invoices List</a>--}}
-{{--                        </nav>--}}
-{{--                    </div>--}}
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInvoice" aria-expanded="false" aria-controls="collapseInvoice">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Sales
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseInvoice" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="{{ route('new.invoice') }}">New Invoice</a>
+                            <a class="nav-link" href="{{ route('all.invoices') }}">Invoices List</a>
+                        </nav>
+                    </div>
 
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAuthentication" aria-expanded="false" aria-controls="collapseAuthentication">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -125,20 +125,88 @@
         </footer>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="{{ asset('js/dashboard-scripts.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
 <script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
 <script src="{{ asset('assets/demo/chart-pie-demo.js') }}"></script>
-<script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+<style>
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 0.25em 0.5em;
+        margin-left: 1px;
+        border-radius: 4px;
+    }
 
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        background-color: #007bff;
+        color: #ffffff;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background-color: #007bff;
+        color: #ffffff;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+        color: #6c757d;
+        cursor: not-allowed;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.previous,
+    .dataTables_wrapper .dataTables_paginate .paginate_button.next {
+        border-radius: 4px;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.previous:hover,
+    .dataTables_wrapper .dataTables_paginate .paginate_button.next:hover {
+        background-color: #007bff;
+        color: #ffffff;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+        background-color: transparent;
+        color: #6c757d;
+    }
+
+    .dataTables_wrapper .dt-buttons .buttons-html5,
+    .dataTables_wrapper .dt-buttons .buttons-html5:hover,
+    .dataTables_wrapper .dt-buttons .buttons-html5:focus {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+        color: #fff;
+    }
+
+    .dataTables_wrapper .dt-buttons .buttons-csv,
+    .dataTables_wrapper .dt-buttons .buttons-csv:hover,
+    .dataTables_wrapper .dt-buttons .buttons-csv:focus {
+        background-color: #28a745;
+        border-color: #28a745;
+        color: #fff;
+    }
+
+    .dataTables_wrapper .dt-buttons .buttons-html5:hover,
+    .dataTables_wrapper .dt-buttons .buttons-csv:hover {
+        background-color: #138496;
+        border-color: #138496;
+    }
+
+    .dataTables_wrapper .dt-buttons .buttons-html5:focus,
+    .dataTables_wrapper .dt-buttons .buttons-csv:focus {
+        background-color: #106669;
+        border-color: #106669;
+    }
+</style>
 @yield('script')
 </body>
 </html>
