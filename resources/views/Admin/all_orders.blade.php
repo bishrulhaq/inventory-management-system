@@ -43,25 +43,25 @@
                             <td>{{ $row->quantity }}</td>
                             <td>
                                 @if($row->order_status=='0')
-                                    <span class="btn btn-sm btn-info">Pending</span>
+                                    <span class="btn btn-md btn-info">Pending</span>
                                 @else
-                                    <span class="btn btn-sm btn-info">Delivered</span>
+                                    <span class="btn btn-md btn-primary">Delivered</span>
                                 @endif
                             </td>
                             <td>
                                 @if($row->order_status=='0')
                                     <a href="{{ 'add-invoice/'.$row->id }}"
-                                       class="btn btn-sm btn-info">Create Invoice</a>
+                                       class="btn btn-md btn-info">Create Invoice</a>
 
                                     <form method="POST" action="{{ route('delete.order', ['id' => $row->id]) }}" class="mt-2">
                                         @csrf
-                                        <button type="submit" class="btn btn-sm btn-danger"
+                                        <button type="submit" class="btn btn-md btn-danger"
                                                 onclick="return confirm('Are you sure you want to delete this order?')">
                                             Delete Order
                                         </button>
                                     </form>
                                 @else
-                                    <span href="#" class="btn btn-sm btn-info">Invoiced</span>
+                                    <span class="btn btn-md btn-primary">Invoiced</span>
                                 @endif
                             </td>
                         </tr>

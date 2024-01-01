@@ -78,7 +78,7 @@
                                         <td>{{ $row->name }}</td>
                                         <td>{{ $row->description }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-sm btn-info edit-category"
+                                            <button type="button" class="btn btn-md btn-info edit-category"
                                                     data-toggle="modal" data-target="#editModal"
                                                     data-id="{{ $row->id }}" data-name="{{ $row->name }}"
                                                     data-description="{{ $row->description }}">

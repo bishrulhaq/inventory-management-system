@@ -19,10 +19,31 @@ class CustomerController extends Controller
 
     public function edit($id)
     {
-        $customers = Customer::where('id', '=', $id)->get();
+        $customer = Customer::find($id);
+        if (!$customer) {
+            return redirect()->back()->with('error', 'Customer not found');
+        }
+        return view('Admin.edit_customer', compact('customer'));
+    }
 
-        return view('customer.edit_customer', compact('customers'));
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required',
+            'company' => 'nullable|max:255',
+            'address' => 'nullable|max:255',
+            'phone' => 'nullable|max:20',
+        ]);
 
+        $customer = Customer::findOrFail($id);
+        $customer->name = $validatedData['name'];
+        $customer->company = $validatedData['company'];
+        $customer->address = $validatedData['address'];
+        $customer->phone = $validatedData['phone'];
+        $customer->save();
+
+        return redirect()->route('customers.edit', $id)->with('success', 'Customer updated successfully');
     }
 
 
@@ -53,34 +74,6 @@ class CustomerController extends Controller
         $customer->save();
         return redirect()->route('add.customer')->with('message_success', 'Customer added successfully!');
     }
-
-    public function update($id, Request $request)
-    {
-
-        $customer = Customer::find($id);
-        $customer->name = $request->name;
-        $customer->email = $request->email;
-        $customer->password = $request->password;
-        $customer->gender = $request->gender;
-        if ($request->is_active) {
-            $customer->is_active = 1;
-
-        }
-
-        $customer->date_of_birth = $request->date_of_birth;
-        $customer->roll = $request->roll;
-
-        if ($customer->save()) {
-
-            return redirect()->back()->with(['msg' => 1]);
-        } else {
-            return redirect()->back()->with(['msg' => 2]);
-        }
-
-        return view('customer.edit', compact('customers'));
-
-    }
-
 
     public function customersData()
     {

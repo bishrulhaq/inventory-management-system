@@ -22,6 +22,7 @@
                         <th>Total Cost</th>
                         <th>Due</th>
                         <th>Date</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,6 +38,13 @@
                         <td>{{ $row->total }}</td>
                         <td>{{ $row->due }}</td>
                         <td>{{ $row->created_at }}</td>
+                        <td>
+                            @if($row->due > 0)
+                                <a href="{{ route('pay.due', ['id' => $row->id]) }}" class="btn btn-primary">Pay Due</a>
+                            @else
+                                <a href="{{ route('invoice.details', ['id' => $row->id]) }}" class="btn btn-primary">Show Invoice</a>
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
 

@@ -120,4 +120,20 @@ class InvoiceController extends Controller
     {
         Invoice::truncate();
     }
+
+    public function payDue($id)
+    {
+        $data = Invoice::find($id);
+
+        $prev_due = $data->due;
+
+        if ($data && $data->due > 0) {
+            $data->due = 0;
+            $data->payment = $data->payment + $prev_due;
+            $data->save();
+            return view('Admin.due_payment_receipt', compact('data','prev_due'));
+        }
+
+        return redirect()->route('dashboard')->with('error', 'Invoice not found or no due to pay');
+    }
 }

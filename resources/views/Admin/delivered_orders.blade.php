@@ -29,9 +29,9 @@
                         <td>{{ $row->quantity }}</td>
                         <td>
                             @if($row->order_status=='0')
-                                <a href="#" class="btn btn-sm btn-info">Pending</a>
+                                <span class="btn btn-md btn-info">Pending</span>
                             @else
-                                <a href="#" class="btn btn-sm btn-info">Delivered</a>
+                                <span  class="btn btn-md btn-primary">Delivered</span>
                             @endif
                         </td>
                     </tr>

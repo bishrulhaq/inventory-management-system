@@ -1,58 +1,54 @@
 @extends('layouts.admin_master')
 
 @section('content')
+    <div class="card">
+        <div class="card-header">
+            <h3>Edit Customer</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ route('customers.update', $customer->id) }}">
+                @csrf
 
-<main>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-7">
-                <div class="card shadow-lg border-0 rounded-lg mt-5">
-                    <div class="card-header"><h3 class="text-center font-weight-light my-4">New Customer</h3></div>
-                    <div class="card-body">
-                        <form method="POST" action="{{URL::to('update-customer/'.$customers->id)}}" enctype="multipart/form-data">
-                        @csrf
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="small mb-1" for="inputFirstName">Customer Name</label>
-                                        <input class="form-control py-4" name="name" value="{{ $customers->name }}" type="text" placeholder="" />
-                                    </div>
-                                </div>
-                                <!-- <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="small mb-1" for="inputFirstName">Customer Email</label>
-                                        <input class="form-control py-4" name="email" type="text" placeholder="" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="small mb-1" for="inputLastName">Company</label>
-                                        <input class="form-control py-4" name="company" type="text" placeholder="" />
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="small mb-1" for="inputLastName">Address</label>
-                                        <input class="form-control py-4" name="address" type="text" placeholder="" />
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="small mb-1" for="inputLastName">Phone</label>
-                                        <input class="form-control py-4" name="phone" type="text" placeholder="" />
-                                    </div>
-                                </div>
-                            </div> -->
-
-                            <div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block">Submit</button></div>
-                        </form>
-                    </div>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" value="{{ old('name', $customer->name) }}" class="form-control">
+                    @error('name')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
-            </div>
+
+                <div class="form-group">
+                    <label for="email">Customer Email</label>
+                    <input type="text" id="email" name="email" value="{{ old('email', $customer->email) }}" class="form-control" readonly>
+                    <!-- This field is read-only, no need for validation -->
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Company</label>
+                    <input type="text" id="company" name="company" value="{{ old('company', $customer->company) }}" class="form-control">
+                    @error('company')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" value="{{ old('address', $customer->address) }}" class="form-control">
+                    @error('address')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" id="phone" name="phone" value="{{ old('phone', $customer->phone) }}" class="form-control">
+                    @error('phone')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
         </div>
     </div>
-</main>
-
 @endsection

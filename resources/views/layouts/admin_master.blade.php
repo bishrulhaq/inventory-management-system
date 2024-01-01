@@ -24,22 +24,40 @@
 
     </div>
     <!-- Navbar-->
+    <!-- Navbar-->
     <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">Settings</a>
-                <a class="dropdown-item" href="#">Activity Log</a>
-                <div class="dropdown-divider"></div>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <a class="dropdown-item" href="route('logout')"
-                       onclick="event.preventDefault(); this.closest('form').submit();">Logout</a>
-                </form>
+               aria-haspopup="true" aria-expanded="false">
+                @if(Auth::check() && Auth::user()->profile_picture)
+                    <img src="{{ asset(Auth::user()->profile_picture) }}" alt="Profile Image"
+                         style="width: 32px; height: 32px; border-radius: 50%;">
+                @else
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                         class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zm0 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1z"/>
+                        <path
+                            d="M8 7a2 2 0 1 1-3 1.732A2 2 0 0 1 8 7zm0 1.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1zM3.5 9a4.5 4.5 0 1 0 5 4.472 5.5 5.5 0 0 1-7-4.94.5.5 0 0 0 .5.468h1zm9 0a.5.5 0 0 0 .5-.468 5.5 5.5 0 0 1-7 4.94A4.5 4.5 0 1 0 3.5 9h1a3.5 3.5 0 1 1 7 0h1z"/>
+                    </svg>
+                @endif
+                @if(Auth::check())
+                    {{ Auth::user()->name }}
+                @endif
+            </a>
+            <div>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="{{ route('settings.edit') }}">Settings</a>
+                    <a class="dropdown-item" href="{{ route('activity.log') }}">Activity Log</a>
+                    <div class="dropdown-divider"></div>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <a class="dropdown-item" href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">Logout</a>
+                    </form>
+                </div>
             </div>
         </li>
     </ul>
+
 </nav>
 <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
@@ -106,7 +124,6 @@
                     <div class="collapse" id="collapseInvoice" aria-labelledby="headingOne"
                          data-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="{{ route('new.invoice') }}">New Invoice</a>
                             <a class="nav-link" href="{{ route('all.invoices') }}">Invoices List</a>
                         </nav>
                     </div>

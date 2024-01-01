@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InvoiceController;
@@ -43,12 +44,8 @@ Route::get('/new-invoice', [InvoiceController::class, 'newformData'])->middlewar
 
 Route::post('/insert-invoice', [InvoiceController::class, 'store'])->middleware(['auth']);
 
-Route::get('/invoice-details', function () {
-    return view('Admin.invoice_details');
-})->middleware(['auth'])->name('invoice.details');
-
 Route::get('/all-invoice', [InvoiceController::class, 'allInvoices'])->middleware(['auth'])->name('all.invoices');
-
+Route::get('/pay-due/{id}', [InvoiceController::class, 'payDue'])->name('pay.due');
 Route::get('/sold-products', [InvoiceController::class, 'soldProducts'])->middleware(['auth'])->name('sold.products');
 // Route::get('/delete', [InvoiceController::class,'delete']);
 
@@ -74,11 +71,10 @@ Route::post('/delete-order/{id}', [OrderController::class, 'deleteOrder'])->name
 Route::get('/add-customer', function () {
     return view('Admin.add_customer');
 })->middleware(['auth'])->name('add.customer');
-
 Route::post('/insert-customer', [CustomerController::class, 'store'])->middleware(['auth']);
-
+Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
+Route::post('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
 Route::get('/all-customers', [CustomerController::class, 'customersData'])->middleware(['auth'])->name('all.customers');
-
 Route::get('/invoice/{id}',  [InvoiceController::class, 'show'])->name('invoice.details');
 
 
@@ -90,5 +86,10 @@ Route::get('/category', [CategoryController::class, 'index'])->middleware(['auth
 Route::post('/add-category', [CategoryController::class, 'store'])->middleware(['auth']);
 Route::post('/update-category/{id}', [CategoryController::class, 'update'])->name('update.category');
 Route::get('/categories', [CategoryController::class, 'getCategories'])->name('get.category');
+
+//settings
+Route::get('/settings', [UserController::class, 'editSettings'])->name('settings.edit');
+Route::post('/settings', [UserController::class, 'updateSettings'])->name('settings.update');
+Route::get('/activity-log', [UserController::class, 'showActivityLog'])->name('activity.log');
 
 require __DIR__ . '/auth.php';
