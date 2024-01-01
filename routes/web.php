@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -75,12 +76,10 @@ Route::post('/insert-customer', [CustomerController::class, 'store'])->middlewar
 Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
 Route::post('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
 Route::get('/all-customers', [CustomerController::class, 'customersData'])->middleware(['auth'])->name('all.customers');
-Route::get('/invoice/{id}',  [InvoiceController::class, 'show'])->name('invoice.details');
+Route::get('/invoice/{id}', [InvoiceController::class, 'show'])->name('invoice.details');
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
 Route::get('/category', [CategoryController::class, 'index'])->middleware(['auth'])->name('add.category');
 Route::post('/add-category', [CategoryController::class, 'store'])->middleware(['auth']);

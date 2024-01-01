@@ -51,7 +51,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-chart-bar mr-1"></i>
-                        Income
+                        Stock Level
                     </div>
                     <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                 </div>
@@ -154,4 +154,42 @@
         </div>
     </div>
 </main>
+@endsection
+
+@section('script')
+
+    <script>
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#292b2c';
+
+        // Bar Chart Example
+
+
+        // Bar Chart for Stock Levels
+        var ctxStock = document.getElementById("myBarChart");
+        var stockChart = new Chart(ctxStock, {
+            type: 'bar',
+            data: {
+                labels: {!! $products->pluck('name') !!},
+                datasets: [{
+                    label: "Stock Levels",
+                    backgroundColor: "rgba(2,117,216,1)",
+                    borderColor: "rgba(2,117,216,1)",
+                    data: {!! $products->pluck('stock') !!},
+                }],
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+    </script>
 @endsection

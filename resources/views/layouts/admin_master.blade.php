@@ -18,7 +18,7 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i>
     </button>
-    <a class="navbar-brand">Inventory Management System</a>
+    <a href="{{ route('dashboard') }}" class="navbar-brand">Inventory Management System</a>
     <!-- Navbar Search-->
     <div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
 
@@ -51,7 +51,8 @@
                     <div class="dropdown-divider"></div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <a class="dropdown-item" href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">Logout</a>
+                        <a class="dropdown-item" href="route('logout')"
+                           onclick="event.preventDefault(); this.closest('form').submit();">Logout</a>
                     </form>
                 </div>
             </div>
