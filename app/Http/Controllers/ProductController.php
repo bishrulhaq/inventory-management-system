@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Category;
 use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
@@ -8,11 +10,20 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-     public function __construct(){
-     	$this->middleware('auth');
-     }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
-    public function store(Request $request){
+    public function index()
+    {
+        $categories = Category::all();
+        return view('Admin.add_product', compact('categories'));
+
+    }
+
+    public function store(Request $request)
+    {
 
         $rules = [
             'code' => 'required|unique:products,product_code',
@@ -46,32 +57,37 @@ class ProductController extends Controller
         }
     }
 
-    public function allProduct(){
-    	$products = Product::all();
-    	return view('Admin.all_product',compact('products'));
+    public function allProduct()
+    {
+        $products = Product::all();
+        return view('Admin.all_product', compact('products'));
     }
 
-    public function availableProducts(){
-        $products = Product::where('stock','>','0')->get();
-        return view('Admin.available_products',compact('products'));
+    public function availableProducts()
+    {
+        $products = Product::where('stock', '>', '0')->get();
+        return view('Admin.available_products', compact('products'));
     }
 
-    public function formData($id){
+    public function formData($id)
+    {
         $product = Product::find($id);
 
-        return view('Admin.add_order',compact('product'));
+        return view('Admin.add_order', compact('product'));
         // return view('Admin.add_order',['product'=>$product]);
     }
 
-    public function purchaseData($id){
+    public function purchaseData($id)
+    {
         $product = Product::find($id);
 
-        return view('Admin.purchase_products',compact('product'));
+        return view('Admin.purchase_products', compact('product'));
     }
 
-    public function storePurchase(Request $request){
+    public function storePurchase(Request $request)
+    {
 
-        Product::where('name',$request->name)->update(['stock' => $request->stock + $request->purchase]);
+        Product::where('name', $request->name)->update(['stock' => $request->stock + $request->purchase]);
 
         return Redirect()->route('all.product');
     }

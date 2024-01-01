@@ -6,6 +6,19 @@
             Orders List
         </div>
         <div class="card-body">
+
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -30,19 +43,26 @@
                             <td>{{ $row->quantity }}</td>
                             <td>
                                 @if($row->order_status=='0')
-                                    <a href="#" class="btn btn-sm btn-info">Pending</a>
+                                    <span class="btn btn-sm btn-info">Pending</span>
                                 @else
-                                    <a href="#" class="btn btn-sm btn-info">Delivered</a>
+                                    <span class="btn btn-sm btn-info">Delivered</span>
                                 @endif
                             </td>
                             <td>
                                 @if($row->order_status=='0')
                                     <a href="{{ 'add-invoice/'.$row->id }}"
-                                       class="btn btn-sm btn-info">createInvoice</a>
-                                @else
-                                    <a href="#" class="btn btn-sm btn-info">Invoiced</a>
-                                @endif
+                                       class="btn btn-sm btn-info">Create Invoice</a>
 
+                                    <form method="POST" action="{{ route('delete.order', ['id' => $row->id]) }}" class="mt-2">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Are you sure you want to delete this order?')">
+                                            Delete Order
+                                        </button>
+                                    </form>
+                                @else
+                                    <span href="#" class="btn btn-sm btn-info">Invoiced</span>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
