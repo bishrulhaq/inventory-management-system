@@ -60,98 +60,73 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-chart-area mr-1"></i>
-                        Growth
+                        Unit Price
                     </div>
-                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                    <div class="card-body"><canvas id="myUnitPriceChart" width="400" height="400"></canvas></div>
                 </div>
             </div>
 
-            <div class="col-xl-12">
+            <div class="col-xl-6">
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-chart-bar mr-1"></i>
-                        Expense
+                        Sales Unit Price
                     </div>
-                    <div class="card-body"><canvas id="myPieChart" width="100%" height="40"></canvas></div>
+                    <div class="card-body"><canvas id="mySalesUnitPriceChart" width="400" height="400"></canvas></div>
                 </div>
             </div>
 
+
+            <div class="col-xl-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar mr-1"></i>
+                       Order Status
+                    </div>
+                    <div class="card-body"><canvas id="myOrderStatusChart" width="400" height="400"></canvas></div>
+                </div>
+            </div>
         </div>
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table mr-1"></i>
-                Sales Report
+                Monthly Order Counts
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Sales</th>
-                            </tr>
+                        <tr>
+                            <th>Year</th>
+                            <th>Month</th>
+                            <th>Total Orders</th>
+                            <th>Order Status</th>
+                        </tr>
                         </thead>
                         <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Sales</th>
-                            </tr>
+                        <tr>
+                            <th>Year</th>
+                            <th>Month</th>
+                            <th>Total Orders</th>
+                            <th>Order Status</th>
+                        </tr>
                         </tfoot>
                         <tbody>
+                        @foreach($monthlyOrderCounts as $orderCount)
                             <tr>
-                                <td>Bishrul Haq</td>
-                                <td>Test</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
+                                <td>{{ $orderCount->year }}</td>
+                                <td>{{ $months[$orderCount->month] }}</td>
+                                <td>{{ $orderCount->total_orders }}</td>
+                                <td>{{ $orderCount->order_status_label }}</td>
                             </tr>
-                            <tr>
-                                <td>Aathif</td>
-                                <td>Test</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                                <td>2011/07/25</td>
-                                <td>$170,750</td>
-                            </tr>
-                            <tr>
-                                <td>Abishanga</td>
-                                <td>Test</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-                                <td>2009/01/12</td>
-                                <td>$86,000</td>
-                            </tr>
-                            <tr>
-                                <td>Ramya</td>
-                                <td>Test</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-                                <td>2009/01/12</td>
-                                <td>$86,000</td>
-                            </tr>
-                            <tr>
-                                <td>Nushath</td>
-                                <td>Test</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-                                <td>2009/01/12</td>
-                                <td>$86,000</td>
-                            </tr>
-
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+
+
     </div>
 </main>
 @endsection
@@ -189,6 +164,80 @@
                 }
             }
         });
+
+        var ctxUnitPrice = document.getElementById("myUnitPriceChart");
+        var unitPriceChart = new Chart(ctxUnitPrice, {
+            type: 'line',
+            data: {
+                labels: {!! $unitPrices->pluck('name') !!},
+                datasets: [{
+                    label: "Unit Prices",
+                    backgroundColor: "rgba(2,117,216,0.2)",
+                    borderColor: "rgba(2,117,216,1)",
+                    pointRadius: 5,
+                    pointBackgroundColor: "rgba(2,117,216,1)",
+                    pointBorderColor: "rgba(255,255,255,0.8)",
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                    pointHitRadius: 50,
+                    pointBorderWidth: 2,
+                    data: {!! $unitPrices->pluck('unit_price') !!},
+                }],
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        // Pie Chart for Sales Unit Prices
+        var ctxSalesUnitPrice = document.getElementById("mySalesUnitPriceChart");
+        var salesUnitPriceChart = new Chart(ctxSalesUnitPrice, {
+            type: 'pie',
+            data: {
+                labels: {!! $salesUnitPrices->pluck('name') !!},
+                datasets: [{
+                    data: {!! $salesUnitPrices->pluck('sales_unit_price') !!},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        // Add more colors if needed
+                    ],
+                }],
+            },
+        });
+
+
+        var ctxOrderStatus = document.getElementById("myOrderStatusChart");
+        var orderStatusChart = new Chart(ctxOrderStatus, {
+            type: 'pie',
+            data: {
+                labels: [
+                    @foreach($orderStatusData as $status)
+                        @if($status->order_status === 1)
+                        'Delivered',
+                    @else
+                        'Pending',
+                    @endif
+                    @endforeach
+                ],
+                datasets: [{
+                    data: {!! $orderStatusData->pluck('total') !!},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)', // Pending color
+                        'rgba(54, 162, 235, 0.8)', // Delivered color
+                        // Add more colors if needed
+                    ],
+                }],
+            },
+        });
+
 
 
     </script>

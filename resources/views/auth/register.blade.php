@@ -57,7 +57,7 @@
                                 </ul>
                             </div>
                         @endif
-                        
+
                     </div>
                     <div class="signup-image">
                         <figure><img src="{{ asset('/images/signin-image.png') }}" alt="sing up image"></figure>
