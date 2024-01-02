@@ -16,6 +16,7 @@ class UserController extends Controller
     public function editSettings()
     {
         $user = Auth::user();
+
         return view('Admin.user_edit', compact('user'));
     }
 
@@ -34,18 +35,20 @@ class UserController extends Controller
 
         if ($request->hasFile('profile_picture')) {
             $image = $request->file('profile_picture');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $imageName = time().'.'.$image->getClientOriginalExtension();
             $image->move(public_path('images'), $imageName);
-            $user->profile_picture = 'images/' . $imageName;
+            $user->profile_picture = 'images/'.$imageName;
         }
 
         $user->save();
+
         return redirect()->back()->with('success', 'Settings updated successfully');
     }
 
     public function showActivityLog()
     {
         $logs = Activity::all();
+
         return view('Admin.activity_log', ['logs' => $logs]);
     }
 }

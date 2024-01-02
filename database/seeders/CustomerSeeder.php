@@ -1,11 +1,10 @@
 <?php
 
-
 namespace Database\Seeders;
 
 use App\Models\Customer;
-use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
+use Illuminate\Database\Seeder;
 
 class CustomerSeeder extends Seeder
 {
@@ -21,9 +20,9 @@ class CustomerSeeder extends Seeder
         for ($i = 0; $i < 50; $i++) {
             $name = $faker->firstName;
             $company = $faker->company;
-            $email = strtolower(str_replace(' ', '_', $name)) . '@' . $faker->freeEmailDomain;
+            $email = strtolower(str_replace(' ', '_', $name)).'@'.$faker->freeEmailDomain;
             $address = $faker->address;
-            $phone = $faker->phoneNumber;
+            $phone = $faker->numerify('##########');
 
             Customer::create([
                 'name' => $name,

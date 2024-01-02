@@ -9,10 +9,11 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customer = new Customer();
+        $customer = new Customer;
         $customer = $customer->get();
+
         return view('dashbord.dashbord', [
-            'customer' => $customer
+            'customer' => $customer,
         ]);
 
     }
@@ -20,9 +21,10 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $customer = Customer::find($id);
-        if (!$customer) {
+        if (! $customer) {
             return redirect()->back()->with('error', 'Customer not found');
         }
+
         return view('Admin.edit_customer', compact('customer'));
     }
 
@@ -46,7 +48,6 @@ class CustomerController extends Controller
         return redirect()->route('customers.edit', $id)->with('success', 'Customer updated successfully');
     }
 
-
     public function create()
     {
         return view('customer.create');
@@ -64,7 +65,7 @@ class CustomerController extends Controller
             'phone' => 'required|max:20',
         ]);
 
-        $customer = new Customer();
+        $customer = new Customer;
         $customer->name = $validatedData['name'];
         $customer->email = $validatedData['email'];
         $customer->company = $validatedData['company'];
@@ -72,15 +73,16 @@ class CustomerController extends Controller
         $customer->phone = $validatedData['phone'];
 
         $customer->save();
+
         return redirect()->route('add.customer')->with('message_success', 'Customer added successfully!');
     }
 
     public function customersData()
     {
         $customers = Customer::all();
+
         return view('Admin.all_customers', compact('customers'));
     }
-
 
     public function delete($id)
     {
@@ -93,5 +95,4 @@ class CustomerController extends Controller
         }
 
     }
-
 }

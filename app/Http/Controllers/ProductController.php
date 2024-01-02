@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Illuminate\Support\Str;
-
-use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -18,6 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         $categories = Category::all();
+
         return view('Admin.add_product', compact('categories'));
 
     }
@@ -60,12 +59,14 @@ class ProductController extends Controller
     public function allProduct()
     {
         $products = Product::all();
+
         return view('Admin.all_product', compact('products'));
     }
 
     public function availableProducts()
     {
         $products = Product::where('stock', '>', '0')->get();
+
         return view('Admin.available_products', compact('products'));
     }
 
@@ -91,6 +92,4 @@ class ProductController extends Controller
 
         return Redirect()->route('all.product');
     }
-
-
 }

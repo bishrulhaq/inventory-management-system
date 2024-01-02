@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Invoice;
-use App\Models\Product;
 use App\Models\Customer;
+use App\Models\Invoice;
 use App\Models\Order;
+use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 
 class InvoiceController extends Controller
 {
@@ -28,7 +27,7 @@ class InvoiceController extends Controller
             'payment' => 'required|numeric|min:0',
             'product_code' => 'required',
             'phone' => 'nullable|numeric',
-            'order_id' => 'required'
+            'order_id' => 'required',
         ]);
 
         $data = new Invoice;
@@ -78,19 +77,19 @@ class InvoiceController extends Controller
     {
         $data = Invoice::find($id);
 
-        if (!$data) {
+        if (! $data) {
             return redirect()->route('dashboard');
         }
 
         return view('Admin.invoice_details', compact('data'));
     }
 
-
     public function formData($id)
     {
         $order = Order::where('id', $id)->first();
         $product = Product::where('product_code', $order->product_code)->first();
         $customer = Customer::where('email', $order->email)->first();
+
         return view('Admin.add_invoice', compact('order', 'product', 'customer', 'id'));
     }
 
@@ -98,20 +97,22 @@ class InvoiceController extends Controller
     {
         $products = Product::all();
         $customers = Customer::all();
+
         return view('Admin.new_invoice', compact('products', 'customers'));
     }
-
 
     public function allInvoices()
     {
         $invoices = Invoice::all();
+
         return view('Admin.all_invoices', compact('invoices'));
     }
 
     public function soldProducts()
     {
-        $products = Invoice::select('product_name', Invoice::raw("SUM(quantity) as count"))
-            ->groupBy(Invoice::raw("product_name"))->get();
+        $products = Invoice::select('product_name', Invoice::raw('SUM(quantity) as count'))
+            ->groupBy(Invoice::raw('product_name'))->get();
+
         // ?print_r($products);
         return view('Admin.sold_products', compact('products'));
     }
@@ -131,7 +132,8 @@ class InvoiceController extends Controller
             $data->due = 0;
             $data->payment = $data->payment + $prev_due;
             $data->save();
-            return view('Admin.due_payment_receipt', compact('data','prev_due'));
+
+            return view('Admin.due_payment_receipt', compact('data', 'prev_due'));
         }
 
         return redirect()->route('dashboard')->with('error', 'Invoice not found or no due to pay');
