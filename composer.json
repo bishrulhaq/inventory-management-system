@@ -12,10 +12,10 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
+        "laravel/pint": "^1.13",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.12",
-        "laravel/pint": "1.0.0",
         "spatie/laravel-activitylog": "^3.17"
     },
     "require-dev": {
