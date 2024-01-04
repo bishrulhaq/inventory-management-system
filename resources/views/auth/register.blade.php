@@ -47,9 +47,20 @@
                                 <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
                             </div>
                         </form>
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                     </div>
                     <div class="signup-image">
-                        <figure><img src="{{ asset('/images/signup-image.jpg') }}" alt="sing up image"></figure>
+                        <figure><img src="{{ asset('/images/signin-image.png') }}" alt="sing up image"></figure>
                         <a href="{{ route('login') }}" class="signup-image-link"><b>I am already a member</b></a>
                     </div>
                 </div>

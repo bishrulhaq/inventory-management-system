@@ -20,7 +20,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                     @foreach($orders as $row)
                     <tr>
                         <td>{{ $row->id }}</td>
@@ -30,19 +30,32 @@
                         <td>{{ $row->quantity }}</td>
                         <td>
                             @if($row->order_status=='0')
-                                <a href="#" class="btn btn-sm btn-info">Pending</a>
+                                <span class="btn btn-md btn-info">Pending</span>
                             @else
-                                <a href="#" class="btn btn-sm btn-info">Delivered</a>
+                                <span class="btn btn-md btn-primary">Delivered</span>
                             @endif
                         </td>
                         <td>
-                            <a href="{{ 'add-invoice/'.$row->id }}" class="btn btn-sm btn-info">createInvoice</a>
+                            @if($row->order_status=='0')
+                                <a href="{{ 'add-invoice/'.$row->id }}"
+                                   class="btn btn-md btn-info">Create Invoice</a>
+
+                                <form method="POST" action="{{ route('delete.order', ['id' => $row->id]) }}" class="mt-2">
+                                    @csrf
+                                    <button type="submit" class="btn btn-md btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete this order?')">
+                                        Delete Order
+                                    </button>
+                                </form>
+                            @else
+                                <span href="#" class="btn btn-md btn-info">Invoiced</span>
+                            @endif
                         </td>
                     </tr>
                     @endforeach
-                    
+
                 </tbody>
-                
+
             </table>
         </div>
     </div>
@@ -50,14 +63,14 @@
 @endsection
 @section('script')
 <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
-        
+
 <script>
-   
+
 
 
    $('#dataTable').DataTable({
     columnDefs: [
-    {bSortable: false, targets: [6]} 
+    {bSortable: false, targets: [6]}
   ],
                 dom: 'lBfrtip',
            buttons: [
@@ -68,7 +81,7 @@
                         page: 'current'
                     },
                        columns: [ 0, ':visible' ]
-                       
+
                    }
                },
                {

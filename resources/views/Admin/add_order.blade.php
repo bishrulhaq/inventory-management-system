@@ -9,6 +9,14 @@
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Add New Order</h3></div>
                     <div class="card-body">
+
+                        @if (session('message'))
+                            <div class="alert {{ session('message_success') ? 'alert-success' : 'alert-danger' }}">
+                                {{ session('message') }}
+                            </div>
+                        @endif
+
+
                         <form method="POST" action="{{url('/insert-order') }}" enctype="multipart/form-data">
                         @csrf
                             <div class="form-row">

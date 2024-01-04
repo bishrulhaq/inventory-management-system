@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>A simple, clean, and responsive HTML invoice template</title>
+		<title>Invoice</title>
 
 		<style>
 			.invoice-box {
@@ -110,7 +110,7 @@
 						<table>
 							<tr>
 								<td class="title">
-									<h2>SEP Company Ltd.</h2>
+									<h2>Ruejeen Lanka Pvt Ltd</h2>
 								</td>
 
 								<td>
@@ -127,9 +127,9 @@
 						<table>
 							<tr>
 								<td>
-									SEP Company Ltd.<br />
-									GEC<br />
-									Chittagong, Bangladesh
+                                    Ruejeen Lanka Pvt Ltd .<br />
+                                    PV741532<br />
+                                    Ratmalana, Sri Lanka
 								</td>
 
 								<td>
@@ -183,7 +183,7 @@
 				<tr class="total">
 					<td></td>
 
-                    <td><input style="padding:5px;" value="Print Document" type="button" onclick="myFunction()" class="button"></input></td>
+                    <td><input value="Print" type="button" onclick="myFunction()" class="button"></input></td>
 				</tr>
 			</table>
 		</div>

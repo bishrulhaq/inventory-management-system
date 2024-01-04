@@ -50,81 +50,195 @@
             <div class="col-xl-6">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <i class="fas fa-chart-area mr-1"></i>
-                        Area Chart Example
+                        <i class="fas fa-chart-bar mr-1"></i>
+                        Stock Level
                     </div>
-                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                 </div>
             </div>
             <div class="col-xl-6">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <i class="fas fa-chart-bar mr-1"></i>
-                        Bar Chart Example
+                        <i class="fas fa-chart-area mr-1"></i>
+                        Unit Price
                     </div>
-                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                    <div class="card-body"><canvas id="myUnitPriceChart" width="400" height="400"></canvas></div>
+                </div>
+            </div>
+
+            <div class="col-xl-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar mr-1"></i>
+                        Sales Unit Price
+                    </div>
+                    <div class="card-body"><canvas id="mySalesUnitPriceChart" width="400" height="400"></canvas></div>
+                </div>
+            </div>
+
+
+            <div class="col-xl-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar mr-1"></i>
+                       Order Status
+                    </div>
+                    <div class="card-body"><canvas id="myOrderStatusChart" width="400" height="400"></canvas></div>
                 </div>
             </div>
         </div>
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table mr-1"></i>
-                DataTable Example
+                Monthly Order Counts
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
+                        <tr>
+                            <th>Year</th>
+                            <th>Month</th>
+                            <th>Total Orders</th>
+                            <th>Order Status</th>
+                        </tr>
                         </thead>
                         <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
+                        <tr>
+                            <th>Year</th>
+                            <th>Month</th>
+                            <th>Total Orders</th>
+                            <th>Order Status</th>
+                        </tr>
                         </tfoot>
                         <tbody>
+                        @foreach($monthlyOrderCounts as $orderCount)
                             <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
+                                <td>{{ $orderCount->year }}</td>
+                                <td>{{ $months[$orderCount->month] }}</td>
+                                <td>{{ $orderCount->total_orders }}</td>
+                                <td>{{ $orderCount->order_status_label }}</td>
                             </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                                <td>2011/07/25</td>
-                                <td>$170,750</td>
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-                                <td>2009/01/12</td>
-                                <td>$86,000</td>
-                            </tr>
-                            
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+
+
     </div>
 </main>
+@endsection
+
+@section('script')
+
+    <script>
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#292b2c';
+
+        // Bar Chart Example
+
+
+        // Bar Chart for Stock Levels
+        var ctxStock = document.getElementById("myBarChart");
+        var stockChart = new Chart(ctxStock, {
+            type: 'bar',
+            data: {
+                labels: {!! $products->pluck('name') !!},
+                datasets: [{
+                    label: "Stock Levels",
+                    backgroundColor: "rgba(2,117,216,1)",
+                    borderColor: "rgba(2,117,216,1)",
+                    data: {!! $products->pluck('stock') !!},
+                }],
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        var ctxUnitPrice = document.getElementById("myUnitPriceChart");
+        var unitPriceChart = new Chart(ctxUnitPrice, {
+            type: 'line',
+            data: {
+                labels: {!! $unitPrices->pluck('name') !!},
+                datasets: [{
+                    label: "Unit Prices",
+                    backgroundColor: "rgba(2,117,216,0.2)",
+                    borderColor: "rgba(2,117,216,1)",
+                    pointRadius: 5,
+                    pointBackgroundColor: "rgba(2,117,216,1)",
+                    pointBorderColor: "rgba(255,255,255,0.8)",
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                    pointHitRadius: 50,
+                    pointBorderWidth: 2,
+                    data: {!! $unitPrices->pluck('unit_price') !!},
+                }],
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        // Pie Chart for Sales Unit Prices
+        var ctxSalesUnitPrice = document.getElementById("mySalesUnitPriceChart");
+        var salesUnitPriceChart = new Chart(ctxSalesUnitPrice, {
+            type: 'pie',
+            data: {
+                labels: {!! $salesUnitPrices->pluck('name') !!},
+                datasets: [{
+                    data: {!! $salesUnitPrices->pluck('sales_unit_price') !!},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        // Add more colors if needed
+                    ],
+                }],
+            },
+        });
+
+
+        var ctxOrderStatus = document.getElementById("myOrderStatusChart");
+        var orderStatusChart = new Chart(ctxOrderStatus, {
+            type: 'pie',
+            data: {
+                labels: [
+                    @foreach($orderStatusData as $status)
+                        @if($status->order_status === 1)
+                        'Delivered',
+                    @else
+                        'Pending',
+                    @endif
+                    @endforeach
+                ],
+                datasets: [{
+                    data: {!! $orderStatusData->pluck('total') !!},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)', // Pending color
+                        'rgba(54, 162, 235, 0.8)', // Delivered color
+                        // Add more colors if needed
+                    ],
+                }],
+            },
+        });
+
+
+
+    </script>
 @endsection
