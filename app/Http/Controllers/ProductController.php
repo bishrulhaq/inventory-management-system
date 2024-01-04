@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -56,18 +57,24 @@ class ProductController extends Controller
         }
     }
 
+
+    public function deleteProduct($id)
+    {
+        $product = Product::find($id);
+        if ($product) {
+            $product->delete();
+            return redirect()->back()->with('success', 'Product deleted successfully');
+        }
+
+        return redirect()->back()->with('error', 'Order not found');
+    }
+
+
     public function allProduct()
     {
         $products = Product::all();
 
         return view('Admin.all_product', compact('products'));
-    }
-
-    public function availableProducts()
-    {
-        $products = Product::where('stock', '>', '0')->get();
-
-        return view('Admin.available_products', compact('products'));
     }
 
     public function formData($id)

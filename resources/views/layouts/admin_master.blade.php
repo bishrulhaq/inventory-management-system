@@ -83,7 +83,6 @@
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="{{ route('add.product') }}">New Product</a>
                             <a class="nav-link" href="{{ route('all.product') }}">Stock Report</a>
-                            <a class="nav-link" href="{{ route('available.products') }}">Available Products</a>
                         </nav>
                     </div>
 

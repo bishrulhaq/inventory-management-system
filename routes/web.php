@@ -31,7 +31,7 @@ Route::post('/insert-product', [ProductController::class, 'store'])->middleware(
 
 Route::get('/all-product', [ProductController::class, 'allProduct'])->middleware(['auth'])->name('all.product');
 
-Route::get('/available-products', [ProductController::class, 'availableProducts'])->middleware(['auth'])->name('available.products');
+Route::post('/delete-product/{id}', [ProductController::class, 'deleteProduct'])->middleware(['auth'])->name('delete.products');
 
 Route::get('/purchase-products/{id}', [ProductController::class, 'purchaseData'])->middleware(['auth']);
 
@@ -47,6 +47,7 @@ Route::post('/insert-invoice', [InvoiceController::class, 'store'])->middleware(
 Route::get('/all-invoice', [InvoiceController::class, 'allInvoices'])->middleware(['auth'])->name('all.invoices');
 Route::get('/pay-due/{id}', [InvoiceController::class, 'payDue'])->name('pay.due');
 Route::get('/sold-products', [InvoiceController::class, 'soldProducts'])->middleware(['auth'])->name('sold.products');
+
 // Route::get('/delete', [InvoiceController::class,'delete']);
 
 //order

@@ -6,6 +6,26 @@
             Products in Stock
         </div>
         <div class="card-body">
+
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if (session('message'))
+                <div class="alert {{ session('message_success') ? 'alert-success' : 'alert-danger' }}">
+                    {{ session('message') }}
+                </div>
+            @endif
+
+
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -35,8 +55,10 @@
                             <td>{{ $row->unit_price }}</td>
                             <td>{{ $row->sales_unit_price }}</td>
                             <td>
-                                <a href="#" class="btn btn-sm btn-info">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                                <form action="{{ route('delete.products', ['id' => $row->id]) }}" method="POST">
+                                    @csrf
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </form>
                                 <a href="{{ 'purchase-products/'.$row->id }}" class="btn btn-sm btn-info">Purchase</a>
                             </td>
                         </tr>
